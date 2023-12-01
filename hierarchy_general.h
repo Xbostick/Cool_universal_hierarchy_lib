@@ -9,11 +9,11 @@
 
 /*Обертка для записи-чтения из flash - памяти*/
 class FlashData : public Data
-
 {
     public:
-    int32_t FlashAddres;
-    FlashData(Data* data = NULL);
+        FlashMeta   data;
+        FlashData(char* raw_string, int len);
+        FlashData(Data* data);
 };
 
 /*--------Clusters_General-------*/
@@ -24,9 +24,17 @@ class FlashData : public Data
 class FlashGovernor : public AGovernor
 {
     private:
-        FlashMap_List* Mapped;
-        OperationStatus WriteData(Data* data);
-        OperationStatus ReadData(Data* data);
+        FlashMap_List* Mapped = nullptr;
+        OperationStatus CreateMapped(FlashData* data);
+        OperationStatus DeleteMapped(char* Name, int NameLen);
+        OperationStatus DeleteMapped(int idx);
+        FlashData* TakeMapped(char* Name, int NameLen);
+        FlashData* TakeMapped(int idx);
+    
+    public:
+        TaskState CheckTask(Data* data);
+        Data* ProcessData(Data* data);
+        Data* ProcessData(FlashData* data);
     
     
 
@@ -37,16 +45,17 @@ class FlashGovernor : public AGovernor
 /*--------Commander_General-------*/
 
 class FlashCommander: public ACommander
-{
-
+{  
+    public:
+        OperationStatus WriteData(FlashData* data);
+        OperationStatus ReadData(FlashData* data);
 };
 
 #endif
 
 /*--------Other_General-------*/
 
-
-struct FlashMap_List{
+struct FlashMeta{
     int32_t 			start;
     int32_t 			len;
     char*               Name;
@@ -54,5 +63,10 @@ struct FlashMap_List{
     int                 idx;
     char*               Description;
     int                 DescriptionLen;
+};
+
+struct FlashMap_List{
+
+    FlashMeta           data;
     FlashMap_List* 		next;    
 };

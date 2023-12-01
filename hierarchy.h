@@ -21,7 +21,8 @@ enum TaskState
 {
 	NotDeligated = 0,
 	Deligated,
-	ExtraReturn
+	ExtraReturn,
+    ExtraReturnOptional
 };
 
 enum OperationStatus
@@ -37,7 +38,7 @@ class Data
     private:
     int raw_actual_index = 0;
     int processed_actual_index = 0;
-    //int governor_code;
+    char governor_code[4];
     char *raw;
     char *processed;
     int len_processed;
@@ -126,7 +127,7 @@ class AProxy
 class ACommander
 {
     public:
-        virtual Data* ProcessData(Data* data);
+        // virtual Data* ProcessData(Data* data);
         
 };
 
