@@ -1,6 +1,7 @@
 #include "hierarchy.h"
 #include <stdio.h>
 #include <string.h>
+
 /*-------Data---------*/
 Data::Data(char* raw_string, int len_string)
 {  
