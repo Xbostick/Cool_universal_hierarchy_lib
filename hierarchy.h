@@ -21,7 +21,8 @@ enum TaskState
 {
 	NotDeligated = 0,
 	Deligated,
-	ExtraReturn
+	ExtraReturn,
+    ExtraReturnOptional
 };
 
 enum OperationStatus
@@ -37,7 +38,7 @@ class Data
     private:
     int raw_actual_index = 0;
     int processed_actual_index = 0;
-    //int governor_code;
+    char governor_code[4];
     char *raw;
     char *processed;
     int len_processed;
@@ -69,8 +70,13 @@ struct Governors_List {
     Governors_List* 		next;
 };
 
+struct Commanders_List {
+    ACommander* 			    obj;
+    Commanders_List* 		    next;
+};
+
 struct Proxy_List {
-    AProxy* 			governor;
+    AProxy* 			obj;
     char*               ProxyName;
     int                 NameLen;
     Proxy_List* 		next;
@@ -84,7 +90,7 @@ class ACluster
     private:
         Data*               Deligate2Governor(Data* data);
         Governors_List*         Governors;
-        Proxy_List              Proxes;
+        Proxy_List*              Proxis;
         int                     num_governors;
         int                     num_proxy;
 
@@ -92,22 +98,22 @@ class ACluster
         ACluster(AGovernor *governors_list = 0, int governors_count = 0, AProxy* proxy_list = 0, int proxy_count = 0);
         virtual Data*       ProcessData(Data* data);
         OperationStatus     AddGovernor(AGovernor *new_module);
-        OperationStatus     AddProxy(AProxy *new_module, char* ProxyName, int NameLen);
+        OperationStatus     AddProxy(AProxy *new_module);//, char* ProxyName, int NameLen);
 
 };
 
 class AGovernor
 {
     private:
-        ACommander* Comander;
-        Proxy_List* Proxy;
-        Data* DataHolder;
+        Commanders_List* Commanders;
+        Proxy_List* Proxis;
+        Data*       DataHolder;
 
     public:
-        TaskState CheckTask(Data* data);
+        virtual TaskState CheckTask(Data* data);
         virtual Data* ProcessData(Data* data);
-        OperationStatus     AddComander(ACommander *new_module);
-        OperationStatus     AddProxy(AProxy *new_module, char* ProxyName, int NameLen);
+        OperationStatus     AddCommander(ACommander *new_module);
+        OperationStatus     AddProxy(AProxy *new_module);//, char* ProxyName, int NameLen);
 };
 
 class AProxy
@@ -120,10 +126,8 @@ class AProxy
 
 class ACommander
 {
-    private:
-
     public:
-        virtual Data* ProcessData(Data* data);
+        // virtual Data* ProcessData(Data* data);
         
 };
 

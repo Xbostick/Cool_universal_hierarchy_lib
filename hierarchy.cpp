@@ -88,3 +88,32 @@ OperationStatus ACluster:: AddGovernor(AGovernor *new_module)
     return OperationStatus::OK;
 };
 
+OperationStatus ACluster:: AddProxy(AProxy *new_module)
+{
+    Proxy_List* newModule = new Proxy_List;
+    newModule->obj = new_module;
+    newModule->next = this->Proxis;
+    this->Proxis = newModule;
+    return OperationStatus::OK;
+};
+
+OperationStatus AGovernor::AddCommander(ACommander *new_module)
+{
+    Commanders_List* newModule = new Commanders_List;
+    newModule->obj = new_module;
+    newModule->next = this->Commanders;
+    this->Commanders = newModule;
+    return OperationStatus::OK;
+};
+
+
+OperationStatus AGovernor:: AddProxy(AProxy *new_module)
+{
+    Proxy_List* newModule = new Proxy_List;
+    newModule->obj = new_module;
+    newModule->next = this->Proxis;
+    this->Proxis = newModule;
+    return OperationStatus::OK;
+};
+
+
