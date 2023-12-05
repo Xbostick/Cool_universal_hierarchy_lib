@@ -87,3 +87,4 @@ OperationStatus ACluster:: AddGovernor(AGovernor *new_module)
     this->Governors = newModule;
     return OperationStatus::OK;
 };
+
