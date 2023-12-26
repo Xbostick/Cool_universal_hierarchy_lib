@@ -97,12 +97,10 @@ OperationStatus ACluster:: AddProxy(AProxy *new_module)
     return OperationStatus::OK;
 };
 
-OperationStatus AGovernor::AddCommander(ACommander *new_module)
+OperationStatus AGovernor::AddCommander(void *new_module)
 {
-    Commanders_List* newModule = new Commanders_List;
-    newModule->obj = new_module;
-    newModule->next = this->Commanders;
-    this->Commanders = newModule;
+    this->Commander = new_module;
+    
     return OperationStatus::OK;
 };
 

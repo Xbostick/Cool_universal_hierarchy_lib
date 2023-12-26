@@ -35,10 +35,10 @@ enum OperationStatus
 
 class Data
 {   
-    private:
+    public:
     int raw_actual_index = 0;
     int processed_actual_index = 0;
-    char governor_code[4];
+    char* governor_code;
     char *raw;
     char *processed;
     int len_processed;
@@ -70,11 +70,6 @@ struct Governors_List {
     Governors_List* 		next;
 };
 
-struct Commanders_List {
-    ACommander* 			    obj;
-    Commanders_List* 		    next;
-};
-
 struct Proxy_List {
     AProxy* 			obj;
     char*               ProxyName;
@@ -87,10 +82,10 @@ struct Proxy_List {
 
 class ACluster
 {   
-    private:
-        Data*               Deligate2Governor(Data* data);
+    protected:
+        Data*                   Deligate2Governor(Data* data);
         Governors_List*         Governors;
-        Proxy_List*              Proxis;
+        Proxy_List*             Proxis;
         int                     num_governors;
         int                     num_proxy;
 
@@ -104,21 +99,23 @@ class ACluster
 
 class AGovernor
 {
-    private:
-        Commanders_List* Commanders;
+    protected:
+        void* Commander;
         Proxy_List* Proxis;
         Data*       DataHolder;
+        char*       identifaction_string;
 
     public:
-        virtual TaskState CheckTask(Data* data);
-        virtual Data* ProcessData(Data* data);
-        OperationStatus     AddCommander(ACommander *new_module);
+        AGovernor(void* Commander);
+        virtual TaskState   CheckTask(Data* data);
+        virtual Data*       ProcessData(Data* data);
+        OperationStatus     AddCommander(void *new_module);
         OperationStatus     AddProxy(AProxy *new_module);//, char* ProxyName, int NameLen);
 };
 
 class AProxy
 {
-    private:
+    protected:
         Data* innerDataHandler;
     public:
         virtual Data* ProcessData(Data* data);
