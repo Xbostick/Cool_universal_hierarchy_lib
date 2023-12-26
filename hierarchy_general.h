@@ -3,6 +3,8 @@
 
 #include "hierarchy.h"
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 
 /*--------Data_General-------*/
 
@@ -60,7 +62,7 @@ class FlashCommander: public ACommander
 /*--------Other_General-------*/
 
 struct FlashMeta{
-    int32_t 			start;
+    int32_t 			start; // sector number
     int32_t 			len;
     char*               Name;
     int                 NameLen;
@@ -71,6 +73,6 @@ struct FlashMeta{
 
 struct FlashMap_List{
 
-    FlashMeta           data;
+    FlashMeta*          data;
     FlashMap_List* 		next;    
 };
