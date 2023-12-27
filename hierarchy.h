@@ -35,32 +35,22 @@ enum OperationStatus
 
 class Data
 {   
+    protected:
+    int actual_index = 0;
+    
     public:
-    int raw_actual_index = 0;
-    int processed_actual_index = 0;
-    char* governor_code;
+    char* governor_code; //мб в протектед занести
     char *raw;
-    char *processed;
-    int len_processed;
-    int len_raw;
+    int* idxs;
+    int num_idx = 0;
 
-
-    virtual OperationStatus SetGovernorCode()= 0;
-
-    public:
-    Data(char* raw_string, int len_string);
+    Data(char* raw_string);
 
     virtual OperationStatus CheckSum() = 0;
-    virtual ArrayType* GetRawData();
-    virtual ArrayType* GetProcData();
 
-    char NextProc();
-    char NextRaw();
-    
-    virtual ArrayType* NextArray() = 0;
+    // char* NextIter();
 
-    char GetProcIdx(int idx);
-    char GetRawIdx(int idx);
+    // int GetActualIdx();
 
     
 };

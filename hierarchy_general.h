@@ -26,9 +26,9 @@ class FlashData : public Data
 
 /*Читает - пишет данные по имени/индексу. Поволяет писать коммент, хранит маппинг в себе*/
 class FlashGovernor : public AGovernor
-{
-    
-    private:
+{    
+    protected:
+        char*       identifaction_string = _Flash_IDs;
         FlashMap_List* Mapped = nullptr;
         OperationStatus CreateMapped(FlashData* data);
         //OperationStatus DeleteMapped(char* Name, int NameLen);

@@ -3,51 +3,10 @@
 #include <string.h>
 
 /*-------Data---------*/
-Data::Data(char* raw_string, int len_string)
+Data::Data(char* raw_string)
 {  
-    this->raw = new char[len_string];
-    memcpy (this->raw, raw_string, len_string);
-};
-
-ArrayType* Data::GetRawData()
-{
-    ArrayType* output = new ArrayType;
-    memcpy(output->data, this->raw, this->len_raw);
-    output->len=this->len_raw;
-    
-    return output;
-};
-
-ArrayType* Data::GetProcData()
-{
-    if (this->processed == NULL) return NULL;
-    
-    ArrayType* output = new ArrayType;
-    memcpy(output->data, this->processed, this->len_processed);
-    output->len=this->len_raw;
-    
-    return output;
-};
-
-char Data::NextProc()
-{   
-    if (this->processed == NULL) return NULL;
-    return *(this->processed + (this->processed_actual_index++));    
-};
-
-char Data::NextRaw()
-{   
-    return *(this->raw + (this->raw_actual_index++));    
-};
-
-char Data::GetProcIdx(int idx)
-{   
-    return *(this->processed + idx);    
-};
-
-char Data::GetRawIdx(int idx)
-{   
-    return *(this->raw + idx);    
+    this->raw = new char;
+    memcpy (this->raw, raw_string, strlen(raw_string));
 };
 
 /*-------Cluster---------*/

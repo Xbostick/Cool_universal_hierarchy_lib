@@ -1,7 +1,8 @@
 #include "hierarchy_general.h"
+#include "identification_strings.h"
 #include <string.h>
 
-FlashData::FlashData(char* raw_string,int len, FlashMeta* meta = nullptr) : Data(raw_string, len)
+FlashData::FlashData(char* raw_string,int len, FlashMeta* meta = nullptr) : Data(raw_string)
 {   
     if (meta == nullptr)
         this->meta = new FlashMeta;
@@ -50,7 +51,7 @@ FlashData* FlashGovernor::TakeMapped(int idx)
         data_to_return = data_to_return->next;
     }
     FlashData* data_from_flash = ((FlashCommander*)(this->Commander))->
-                                                    ReadData(&data_to_return->data);
+                                                    ReadData(data_to_return->data);
     
     return data_from_flash;
 };
@@ -63,7 +64,14 @@ TaskState FlashGovernor::CheckTask(Data* data)
         return TaskState::NotDeligated;
 };
 
-Data* FlashGovernor::ProcessData(Data* data)
+/*input as data with array in raw with idxs to read or write*/
+Data* FlashGovernor::ProcessData(Data* data) 
 {
-    if (strstr(this->identifaction_string, data->governor_code))
+    if (strstr(_Flash_Read, data->governor_code))
+    {
+        for 
+        
+    }
+
+
 };
